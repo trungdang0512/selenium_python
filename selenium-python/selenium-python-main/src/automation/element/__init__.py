@@ -51,6 +51,9 @@ class Element:
     def click(self):
         self.find_visible().click()
 
+    def get_text(self):
+        self.find().__getattribute__('innerText')
+
     def is_displayed(self):
         try:
             return self.find().is_displayed()

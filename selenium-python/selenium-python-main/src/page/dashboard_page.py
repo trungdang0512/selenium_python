@@ -76,6 +76,7 @@ class DashboardPage:
     def get_page_sibling(self, page_name):
         time.sleep(5)
         self.pageBesidePageOnMenuBar.value = self.pageBesidePageOnMenuBar.value.format(page_name)
-        actual_page_name = self.pageBesidePageOnMenuBar.text
+        print(self.pageBesidePageOnMenuBar.value)
+        actual_page_name = self.pageBesidePageOnMenuBar.get_text()
         print(actual_page_name)
-        return actual_page_name
+        # return actual_page_name

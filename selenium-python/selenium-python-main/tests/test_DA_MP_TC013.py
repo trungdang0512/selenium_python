@@ -28,4 +28,4 @@ class test_DA_MP_TC013(TestBase):
         # self.dashboard_page.create_new_page(page1)
         # self.dashboard_page.select_global_setting_menu('Add Page')
         # self.dashboard_page.create_new_page(page2)
-        self.dashboard_page.pageBesidePageOnMenuBar('Page1_MTUeDBEjyT')
+        self.dashboard_page.get_page_sibling("Page1_zkgzBUJCDl")
