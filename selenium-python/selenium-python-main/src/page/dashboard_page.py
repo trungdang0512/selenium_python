@@ -40,23 +40,35 @@ class DashboardPage(BasePage):
         pageBesidePageOnMenuBar.value = pageBesidePageOnMenuBar.value.format(page1.name, page2.name)
         return pageBesidePageOnMenuBar.is_displayed()
 
-    def click_on_page_on_menu_bar(self, page):
+    def hover_on_page(self, page: Page):
+        time.sleep(2)
+        PageLoader.wait_for_page_load()
+        if page.parent is not None:
+            self.hover_on_page(page.parent)
+        pageOnMenuBar = Element.xpath(self.pageOnMenuBarXpath)
+        pageOnMenuBar.value = pageOnMenuBar.value.replace('{}', page.name)
+        pageOnMenuBar.hover()
+
+    def click_on_page(self, page: Page):
         time.sleep(2)
         pageOnMenuBar = Element.xpath(self.pageOnMenuBarXpath)
-        pageOnMenuBar.value = pageOnMenuBar.value.replace('{}', page)
+        pageOnMenuBar.value = pageOnMenuBar.value.replace('{}', page.name)
         pageOnMenuBar.click()
+
+    def open_page(self, page: Page):
+        self.hover_on_page(page)
+        self.click_on_page(page)
 
     @allure.step("Delete the page")
     def delete_selected_page(self, page: Page):
         time.sleep(2)
-        self.click_on_page_on_menu_bar(page.name)
+        self.open_page(page)
         self.select_global_setting_menu("Delete")
-        self.accept_alert()
 
     @allure.step("Check the page is deleted")
     def check_the_page_deleted(self, page: Page):
         time.sleep(2)
         pageOnMenuBar = Element.xpath(self.pageOnMenuBarXpath)
         pageOnMenuBar.value = pageOnMenuBar.value.replace('{}', page.name)
-        return  pageOnMenuBar.is_displayed()
+        return pageOnMenuBar.is_displayed()
 

@@ -11,7 +11,7 @@ class PageLoader:
     def wait_for_page_load(timeout=10):
         try:
             WebDriverWait(Selenium.driver.get_webdriver(), timeout).until(
-                lambda d: d.execute_script('return document.readyState') == 'complete'
+                EC.presence_of_element_located((By.TAG_NAME, "body"))
             )
         except Exception as e:
             print(f"Exception occurred while waiting for page to load: {e}")

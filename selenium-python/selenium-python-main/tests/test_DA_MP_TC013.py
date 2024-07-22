@@ -32,4 +32,7 @@ class test_DA_MP_TC013(TestBase):
         self.create_new_page.create_new_page(page2)
         assert self.dashboard_page.check_page_after(page1, page2)
         self.dashboard_page.delete_selected_page(page2)
+        self.dashboard_page.accept_alert()
         self.dashboard_page.delete_selected_page(page1)
+        self.dashboard_page.accept_alert()
+

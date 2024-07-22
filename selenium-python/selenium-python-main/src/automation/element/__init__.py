@@ -1,4 +1,5 @@
 from selenium.common import NoSuchElementException, TimeoutException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.select import Select
@@ -50,6 +51,10 @@ class Element:
 
     def click(self):
         self.find_visible().click()
+
+    def hover(self):
+        hover = ActionChains(_driver()).move_to_element(self.find_visible())
+        hover.perform()
 
     def get_text(self):
         self.find().__getattribute__('innerText')
