@@ -7,9 +7,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from src.automation import Selenium
 from src.automation.element import Element
+from src.page.base_page import BasePage
 
 
-class LoginPage:
+class LoginPage(BasePage):
     def __init__(self):
         self.driver = Selenium
         self.txt_username = Element.xpath("//input[@id='username']")

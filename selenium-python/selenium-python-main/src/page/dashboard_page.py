@@ -7,23 +7,19 @@ from selenium.webdriver.support.select import Select
 from src.automation import Selenium
 from src.model.page import Page
 from src.automation.element import Element, _driver, _waiter
+from src.page.base_page import BasePage
 from src.until.PageLoader import PageLoader
 
 
-class DashboardPage:
+class DashboardPage(BasePage):
     def __init__(self):
-        self.menu_item = ""
         self.header = Element.xpath("//title")
         self.loggedUser = Element.xpath("//a[@href='#Welcome']")
         self.globalSettingMenu = Element.xpath("//div[@id='main-menu']//li[@class='mn-setting']")
-        self.pageNameTextBox = Element.xpath("//input[@id='name']")
-        self.parentPageSelection = Element.xpath("//select[@id='parent']")
-        self.numberOfColumnSelection = Element.xpath("//select[@id='columnnumber']")
-        self.displayAfterSelection = Element.xpath("//select[@id='afterpage']")
-        self.publicCheckbox = Element.xpath("//input[@id='ispublic']")
-        self.okButton = Element.xpath("//input[@id='OK']")
-        self.itemsOnGlobalSettingMenu = Element.xpath("//div[@id='main-menu']//li[@class='mn-setting']//following-sibling::li/a[text()='{}']")
-        self.pageBesidePageOnMenuBar = Element.xpath("//div[@id='main-menu']//li[a[text()='{}']]/following-sibling::li[1]/a")
+
+        self.itemsOnGlobalSettingMenuXpath = "//div[@id='main-menu']//li[@class='mn-setting']//following-sibling::li/a[text()='{}']"
+        self.pageOnMenuBarXpath = "//div[@id='main-menu']//li[a[text()='{}']]"
+        self.pageBesidePageOnMenuBarXpath = "//div[@id='main-menu']//li[a[text()='{}']]/following-sibling::li[1]/a[text()='{}']"
 
     @allure.step("Is dashboard page displayed")
     def is_displayed(self):
@@ -33,50 +29,34 @@ class DashboardPage:
     @allure.step("Select Global Setting Menu")
     def select_global_setting_menu(self, option):
         time.sleep(5)
+        itemsOnGlobalSettingMenu = Element.xpath(self.itemsOnGlobalSettingMenuXpath)
         self.globalSettingMenu.click()
-        self.itemsOnGlobalSettingMenu.value = self.itemsOnGlobalSettingMenu.value.format(option)
-        print(self.itemsOnGlobalSettingMenu.value)
-        self.itemsOnGlobalSettingMenu.click()
+        itemsOnGlobalSettingMenu.value = itemsOnGlobalSettingMenu.value.replace('{}', option, 1)
+        itemsOnGlobalSettingMenu.click()
 
-
-    def fill_page_name(self, page_name):
-        self.pageNameTextBox.enter(page_name)
-
-    def select_parent_page(self, parent_page):
-        if parent_page is not None:
-            time.sleep(5)
-            self.parentPageSelection.select_by_text(parent_page)
-
-    def select_number_of_column(self, number_of_column):
-        if number_of_column is not None:
-            time.sleep(5)
-            self.numberOfColumnSelection.select_by_text(number_of_column)
-
-    def select_display_after(self, display_after):
-        if display_after is not None:
-            time.sleep(5)
-            self.displayAfterSelection.select_by_text(display_after)
-
-    def click_on_public(self, if_public):
-        if if_public:
-            self.publicCheckbox.click()
-
-    def click_on_submit_button(self):
-        self.okButton.click()
-
-    @allure.step("Create new Page ")
-    def create_new_page(self, page: Page):
-        self.fill_page_name(page.name)
-        self.select_parent_page(page.parent)
-        self.select_number_of_column(page.number_of_columns)
-        self.select_display_after(page.display_after)
-        self.click_on_public(page.public)
-        self.click_on_submit_button()
-
-    def get_page_sibling(self, page_name):
+    def check_page_after(self, page1: Page, page2: Page):
         time.sleep(5)
-        self.pageBesidePageOnMenuBar.value = self.pageBesidePageOnMenuBar.value.format(page_name)
-        print(self.pageBesidePageOnMenuBar.value)
-        actual_page_name = self.pageBesidePageOnMenuBar.get_text()
-        print(actual_page_name)
-        # return actual_page_name
+        pageBesidePageOnMenuBar = Element.xpath(self.pageBesidePageOnMenuBarXpath)
+        pageBesidePageOnMenuBar.value = pageBesidePageOnMenuBar.value.format(page1.name, page2.name)
+        return pageBesidePageOnMenuBar.is_displayed()
+
+    def click_on_page_on_menu_bar(self, page):
+        time.sleep(2)
+        pageOnMenuBar = Element.xpath(self.pageOnMenuBarXpath)
+        pageOnMenuBar.value = pageOnMenuBar.value.replace('{}', page)
+        pageOnMenuBar.click()
+
+    @allure.step("Delete the page")
+    def delete_selected_page(self, page: Page):
+        time.sleep(2)
+        self.click_on_page_on_menu_bar(page.name)
+        self.select_global_setting_menu("Delete")
+        self.accept_alert()
+
+    @allure.step("Check the page is deleted")
+    def check_the_page_deleted(self, page: Page):
+        time.sleep(2)
+        pageOnMenuBar = Element.xpath(self.pageOnMenuBarXpath)
+        pageOnMenuBar.value = pageOnMenuBar.value.replace('{}', page.name)
+        return  pageOnMenuBar.is_displayed()
+

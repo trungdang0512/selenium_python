@@ -17,3 +17,4 @@ class test_DA_LOGIN_TC002(TestBase):
     def test_DA_LOGIN_TC002(self, user_name, password):
         self.login_page.login(user_name, password)
         self.assertEqual(self.login_page.get_alert_text(), "Username or password is invalid")
+        self.login_page.accept_alert()
