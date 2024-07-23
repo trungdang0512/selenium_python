@@ -49,6 +49,9 @@ class Element:
     def enter(self, value):
         self.find_visible().send_keys(value)
 
+    def clear(self):
+        self.find_visible().clear()
+
     def click(self):
         self.find_visible().click()
 
@@ -75,7 +78,10 @@ class Element:
 
     def select_by_text(self, text):
         select = Select(self.find())
-        select.select_by_visible_text(text)
+        for option in select.options:
+            if text in option.text:
+                select.select_by_visible_text(option.text)
+                break
 
     def select_by_index(self, index):
         select = Select(self.find_visible())

@@ -59,6 +59,10 @@ class DashboardPage(BasePage):
         self.hover_on_page(page)
         self.click_on_page(page)
 
+    def get_page_tilte(self):
+        page_title = _driver().title.replace('TestArchitect ™ - ', '')
+        return page_title
+
     @allure.step("Delete the page")
     def delete_selected_page(self, page: Page):
         time.sleep(2)

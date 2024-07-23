@@ -19,7 +19,7 @@ class test_DA_MP_TC013(TestBase):
     page_name2 = 'Page2_' + StringHelper.generate_name()
 
     page1 = page.Page(page_name1)
-    page2 = page.Page(page_name2, None, None, page1._name, None)
+    page2 = page.Page(page_name2, None, None, page1, None)
 
     @allure.title("Verify that the newly added main parent page is positioned at the location specified as set with 'Displayed After' field of 'New Page' form on the main page bar 'Parent Page' dropped down menu")
     @data(("administrator", "", page1, page2))
