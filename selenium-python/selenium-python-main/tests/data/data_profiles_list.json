@@ -1,0 +1,14 @@
+{
+  "item_type": [
+    "Test Modules",
+    "Test Cases",
+    "Test Objectives",
+    "Data Sets",
+    "Actions",
+    "Interface Entities",
+    "Test Results",
+    "Test Case Results",
+    "Test Suites",
+    "Bugs"
+  ]
+}

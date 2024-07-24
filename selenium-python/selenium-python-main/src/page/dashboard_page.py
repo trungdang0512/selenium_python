@@ -8,7 +8,7 @@ from src.automation import Selenium
 from src.model.page import Page
 from src.automation.element import Element, _driver, _waiter
 from src.page.base_page import BasePage
-from src.until.PageLoader import PageLoader
+from src.until.page_loader import PageLoader
 
 
 class DashboardPage(BasePage):
@@ -63,11 +63,20 @@ class DashboardPage(BasePage):
         page_title = _driver().title.replace('TestArchitect ™ - ', '')
         return page_title
 
-    @allure.step("Delete the page")
-    def delete_selected_page(self, page: Page):
+    @allure.step("Click on Delete link")
+    def click_on_delete_link(self, page: Page):
         time.sleep(2)
         self.open_page(page)
         self.select_global_setting_menu("Delete")
+
+    @allure.step("Delete the page")
+    def delete_selected_page(self, page: Page):
+        time.sleep(1)
+        self.open_page(page)
+        self.select_global_setting_menu("Delete")
+        time.sleep(1)
+        self.accept_alert()
+        time.sleep(1)
 
     @allure.step("Check the page is deleted")
     def check_the_page_deleted(self, page: Page):

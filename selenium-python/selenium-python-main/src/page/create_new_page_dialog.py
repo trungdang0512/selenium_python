@@ -7,7 +7,7 @@ from src.model.page import Page
 from src.page.base_page import BasePage
 
 
-class CreateNewPagePanel(BasePage):
+class CreateNewPageDialog(BasePage):
     def __init__(self):
         self.pageNameTextBox = Element.xpath("//input[@id='name']")
         self.parentPageSelection = Element.xpath("//select[@id='parent']")

@@ -1,0 +1,8 @@
+{
+  "USERNAME_PASSWORD_INVALID": "Username or password is invalid",
+  "BLANK_USERNAME_PASSWORD": "Please enter username",
+  "DELETE_PAGE_CONFIRMATION":  "Are you sure you want to remove this page?",
+  "PARENT_PAGE_DELETION_ERROR": "Cannot delete page '%s' since it has child page(s).\n",
+  "PANEL_HEIGHT_INCORRECT": "Panel height must be greater than or equal to 300 and less than or equal to 800.",
+  "NAME_FIELD_EMPTY_DATAPROFILES": "Please input profile name."
+}
