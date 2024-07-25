@@ -1,3 +1,5 @@
+from typing import List
+
 from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
@@ -5,6 +7,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as condition
+from selenium.webdriver.support import expected_conditions as EC
 
 from src.automation import Selenium
 
@@ -46,8 +49,8 @@ class Element:
         return _waiter().until(condition.presence_of_element_located(
             (str(self._by), self._value)))
 
-    def find_all(self) -> list[WebElement]:
-        return _waiter().until(condition.presence_of_all_elements_located(
+    def find_all(self) -> List[WebElement]:
+        return _waiter().until(EC.presence_of_all_elements_located(
             (self._by, self._value)))
 
     def enter(self, value):
@@ -64,20 +67,32 @@ class Element:
         hover.perform()
 
     def get_text(self) -> str:
-        element = self.find()
+        element = self.find_visible()
         if element:
             print(f"Found element: {element}")  # In ra đối tượng WebElement
             print(f"Element text: {element.text}")  # In ra văn bản của phần tử
-            return element.get_property('text')
+            return element.text
         else:
             print("Element not found")
             return ""
+
+    def get_all_texts(self) -> List[str]:
+        elements = self.find_all()
+        return [elem.text for elem in elements]
 
     def is_displayed(self):
         try:
             return self.find().is_displayed()
         except (NoSuchElementException, TimeoutException):
             return False
+
+    def location(self):
+        element = self.find()
+        return element.location
+
+    def size(self):
+        element = self.find()
+        return element.size
 
     @property
     def value(self):
@@ -101,3 +116,11 @@ class Element:
     def select_by_value(self, value):
         select = Select(self.find_visible())
         select.select_by_value(value)
+
+    def has_option_with_text(self, text: str) -> bool:
+        select_element = self.find()
+        options = select_element.find_elements(By.TAG_NAME, "option")
+        for option in options:
+            if text in option.text:
+                return True
+        return False

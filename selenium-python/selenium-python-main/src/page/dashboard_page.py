@@ -14,6 +14,7 @@ from src.until.page_loader import PageLoader
 
 class DashboardPage(BasePage):
     def __init__(self):
+        super().__init__()
         self.header = Element.xpath("//title")
         self.loggedUser = Element.xpath("//a[@href='#Welcome']")
         self.globalSettingMenu = Element.xpath("//div[@id='main-menu']//li[@class='mn-setting']")
@@ -55,7 +56,6 @@ class DashboardPage(BasePage):
         time.sleep(2)
         pageOnMenuBar = Element.xpath(self.pageOnMenuBarXpath)
         pageOnMenuBar.value = pageOnMenuBar.value.replace('{}', page.name)
-        print(pageOnMenuBar.text)
         pageOnMenuBar.click()
 
     def open_page(self, page: Page):

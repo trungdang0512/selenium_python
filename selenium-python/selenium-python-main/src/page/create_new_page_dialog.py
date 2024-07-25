@@ -9,6 +9,7 @@ from src.page.base_page import BasePage
 
 class CreateNewPageDialog(BasePage):
     def __init__(self):
+        super().__init__()
         self.pageNameTextBox = Element.xpath("//input[@id='name']")
         self.parentPageSelection = Element.xpath("//select[@id='parent']")
         self.numberOfColumnSelection = Element.xpath("//select[@id='columnnumber']")
