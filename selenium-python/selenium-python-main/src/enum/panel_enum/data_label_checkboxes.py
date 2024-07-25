@@ -1,7 +1,6 @@
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
-class DataLabelsCheckBoxes(Enum, GetValueEnum):
+class DataLabelsCheckBoxes(Enum):
     SERIES= "Series"
     CATEGORIES= "Categories"
     VALUE= "Value"

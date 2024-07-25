@@ -1,9 +1,8 @@
 import random
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
 
-class Styles(Enum, GetValueEnum):
+class Styles(Enum):
     _2D = "2D"
     _3D = "3D"
 

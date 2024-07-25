@@ -1,9 +1,8 @@
 import random
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
 
-class ItemType(Enum, GetValueEnum):
+class ItemType(Enum):
     TEST_MODULE = "test module"
     TEST_CASES = "test case"
     TEST_OBJECTIVES = "test objective"

@@ -1,10 +1,9 @@
 import random
 from enum import Enum
 
-from src.until.get_value_enum import GetValueEnum
 
 
-class ChartTypeOptions(Enum, GetValueEnum):
+class ChartTypeOptions(Enum):
     PIE = "Pie"
     SINGLE_BAR = "Single Bar"
     STACKED_BAR = "Stacked Bar"

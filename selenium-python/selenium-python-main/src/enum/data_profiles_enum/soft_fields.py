@@ -1,8 +1,7 @@
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
 
-class SortFields(Enum, GetValueEnum):
+class SortFields(Enum):
     DEFAULT = "--- Select field ---"
     NAME = "Name"
     LOCATION = "Location"

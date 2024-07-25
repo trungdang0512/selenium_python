@@ -49,6 +49,7 @@ class CreateNewPanelDialog(BasePage):
 
     def select_series(self, series: SeriesOptions):
         if series is not None:
+            print("select series")
             self.seriesSelection.select_by_text(series.get_value())
 
     def click_on_OK_button_of_new_panel_dialog(self):
@@ -60,11 +61,19 @@ class CreateNewPanelDialog(BasePage):
     def fill_display_settings(self, display_setting: DisplaySettings):
         # self.select_panel_type(display_setting.panelType)
         # self.select_data_profile(display_setting.dataProfile)
-        self.fill_display_name(display_setting.displayName)
+        self.fill_display_name(display_setting.display_name)
 
     def fill_chart_settings(self, chart_setting: ChartSettings):
+        print("fill chart settings")
         self.select_series(chart_setting.series)
 
     def fill_new_panel_info(self, new_panel: Panel):
-        self.fill_display_name(new_panel.display_settings)
-        self.fill_chart_settings(new_panel.display_settings)
+        time.sleep(2)
+        self.fill_display_settings(new_panel.displaySettings)
+        self.fill_chart_settings(new_panel.displaySettings)
+
+    def create_new_panel(self, new_panel: Panel):
+        self.fill_new_panel_info(new_panel)
+        time.sleep(2)
+        self.click_on_OK_button_of_new_panel_dialog()
+        self.click_on_OK_button_of_confiuration()

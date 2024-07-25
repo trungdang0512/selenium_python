@@ -10,7 +10,7 @@ from src.automation import Selenium
 
 
 def _waiter():
-    return WebDriverWait(Selenium.driver.get_webdriver(), 5)
+    return WebDriverWait(Selenium.driver.get_webdriver(), 10)
 
 
 def _driver():
@@ -46,6 +46,10 @@ class Element:
         return _waiter().until(condition.presence_of_element_located(
             (str(self._by), self._value)))
 
+    def find_all(self) -> list[WebElement]:
+        return _waiter().until(condition.presence_of_all_elements_located(
+            (self._by, self._value)))
+
     def enter(self, value):
         self.find_visible().send_keys(value)
 
@@ -59,8 +63,15 @@ class Element:
         hover = ActionChains(_driver()).move_to_element(self.find_visible())
         hover.perform()
 
-    def get_text(self):
-        self.find().__getattribute__('innerText')
+    def get_text(self) -> str:
+        element = self.find()
+        if element:
+            print(f"Found element: {element}")  # In ra đối tượng WebElement
+            print(f"Element text: {element.text}")  # In ra văn bản của phần tử
+            return element.get_property('text')
+        else:
+            print("Element not found")
+            return ""
 
     def is_displayed(self):
         try:

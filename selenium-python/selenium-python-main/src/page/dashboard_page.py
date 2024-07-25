@@ -1,4 +1,5 @@
 import time
+from typing import List
 
 import allure
 from selenium.webdriver.common.by import By
@@ -16,6 +17,7 @@ class DashboardPage(BasePage):
         self.header = Element.xpath("//title")
         self.loggedUser = Element.xpath("//a[@href='#Welcome']")
         self.globalSettingMenu = Element.xpath("//div[@id='main-menu']//li[@class='mn-setting']")
+        self.choosePanelsButton = Element.xpath("//a[@id='btnChoosepanel']")
 
         self.itemsOnGlobalSettingMenuXpath = "//div[@id='main-menu']//li[@class='mn-setting']//following-sibling::li/a[text()='{}']"
         self.pageOnMenuBarXpath = "//div[@id='main-menu']//li[a[text()='{}']]"
@@ -53,11 +55,16 @@ class DashboardPage(BasePage):
         time.sleep(2)
         pageOnMenuBar = Element.xpath(self.pageOnMenuBarXpath)
         pageOnMenuBar.value = pageOnMenuBar.value.replace('{}', page.name)
+        print(pageOnMenuBar.text)
         pageOnMenuBar.click()
 
     def open_page(self, page: Page):
         self.hover_on_page(page)
         self.click_on_page(page)
+
+    def open_choose_panels_page(self):
+        time.sleep(1)
+        self.choosePanelsButton.click()
 
     def get_page_tilte(self):
         page_title = _driver().title.replace('TestArchitect ™ - ', '')

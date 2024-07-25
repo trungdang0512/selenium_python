@@ -1,9 +1,8 @@
 import random
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
 
-class SeriesOptions(Enum, GetValueEnum):
+class SeriesOptions(Enum):
     NAME = "name"
     LOCATION = "location"
     DESCRIPTION = "description"
@@ -18,10 +17,9 @@ class SeriesOptions(Enum, GetValueEnum):
     URL = "url"
     DEFAULT = "Select a field..."
 
-    def select_random(self):
-        values = list(SeriesOptions)
-        random_option = random.choice(values)
-        return random_option
+    @classmethod
+    def select_random_series(cls):
+        return random.choice(list(cls))
 
     def get_value(self):
         return self.value

@@ -1,7 +1,15 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Union
+
+from src.model.panel.chart_settings import ChartSettings
+from src.model.panel.display_settings import DisplaySettings
+from src.model.panel.filter import Filters
+
 
 @dataclass
 class Panel:
-    def __init__(self, display_settings=None, filter=None):
-        self.display_settings = display_settings
-        self.filter = filter
+    displaySettings: Union[DisplaySettings, ChartSettings] = field(default_factory=DisplaySettings)
+    filter: Filters = field(default_factory=Filters)
+
+    def __str__(self):
+        return f"Panel{{displaySettings={self.displaySettings}, filter={self.filter}}}"

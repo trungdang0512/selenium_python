@@ -6,7 +6,7 @@ from src.model.data_profile import DataProfile
 
 @dataclass
 class DisplaySettings:
-    def __init__(self, panel_type=None, data_profile=None, display_name=None):
-        self.panelType = PanelType.default_panel_type()
-        self.dataProfile = DataProfile
-        self.displayName = None
+    def __init__(self, panel_type=None, data_profile=None, display_name=""):
+        self.panel_type = panel_type if panel_type is not None else PanelType.default_panel_type()
+        self.data_profile = data_profile
+        self.display_name = display_name

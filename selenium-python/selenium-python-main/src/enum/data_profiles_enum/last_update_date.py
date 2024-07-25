@@ -1,9 +1,7 @@
 import random
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
-
-class LastUpdateDateValue(Enum, GetValueEnum):
+class LastUpdateDateValue(Enum):
     TODAY = "Today"
     YESTERDAY = "Yesterday"
     THIS_WEEK = "This week"

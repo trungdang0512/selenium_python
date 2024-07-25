@@ -1,8 +1,7 @@
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
 
-class FilterFields(Enum, GetValueEnum):
+class FilterFields(Enum):
     RECENT_RESULT = "Recent result"
     LAST_UPDATE_DATE = "Last update date"
 

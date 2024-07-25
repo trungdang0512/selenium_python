@@ -1,8 +1,7 @@
 import random
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
-class Folder(Enum, GetValueEnum):
+class Folder(Enum):
     CAR_RENTAL= "Car Rental"
     MUSIC_LIBRARY= "Music Library"
     SCRIPTING_TECHNIQUES= "Scripting techniques sample"

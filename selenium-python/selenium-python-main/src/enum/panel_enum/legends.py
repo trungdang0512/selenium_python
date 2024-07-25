@@ -1,9 +1,8 @@
 import random
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
 
-class Legends(Enum, GetValueEnum):
+class Legends(Enum):
     NONE = "None"
     TOP = "Top"
     RIGHT = "Right"

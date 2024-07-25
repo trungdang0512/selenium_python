@@ -1,8 +1,7 @@
 from enum import Enum
-from src.until.get_value_enum import GetValueEnum
 
 
-class LeftNavBar(Enum, GetValueEnum):
+class LeftNavBar(Enum):
     GENERAL_SETTINGS = "General Settings"
     DISPLAY_FIELDS = "Display Fields"
     SORT_FIELDS = "Sort Fields"
