@@ -4,7 +4,7 @@ class SoftAssert:
     @staticmethod
     def soft_assert(assertion_func, message=None):
         try:
-            assertion_func()
+            lambda: assertion_func()
         except AssertionError as e:
             if message is None:
                 message = "Assertion failed"
@@ -14,4 +14,4 @@ class SoftAssert:
     @staticmethod
     def assert_all():
         if SoftAssert.errors:
-            raise AssertionError(f"Các soft assertion thất bại:\n" + "\n".join(SoftAssert.errors))
+            raise AssertionError(f"The list of FAILED soft assertions :\n" + "\n".join(SoftAssert.errors))

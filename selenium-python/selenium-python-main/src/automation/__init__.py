@@ -17,6 +17,14 @@ class Selenium:
         return Selenium.driver.get_webdriver()
 
     @staticmethod
+    def maximize():
+        return Selenium.driver.maximize()
+
+    @staticmethod
+    def close_notification():
+        return Selenium.driver.close_notification()
+
+    @staticmethod
     def quit():
         return Selenium.driver.quit()
 

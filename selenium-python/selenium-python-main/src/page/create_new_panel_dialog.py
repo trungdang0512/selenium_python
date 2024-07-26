@@ -3,6 +3,8 @@ import time
 import allure
 
 from src.automation.element import Element
+from src.enum.panel_enum.chart_type_option import ChartTypeOptions
+from src.enum.panel_enum.data_label_checkboxes import DataLabelsCheckBoxes
 from src.enum.panel_enum.panel_type import PanelType
 from src.enum.panel_enum.series_options import SeriesOptions
 from src.model.data_profile import DataProfile
@@ -22,30 +24,37 @@ class CreateNewPanelDialog(BasePage):
         self.chartTitleTextBox = Element.xpath("//input[@id= 'txtChartTitle']")
         self.showTitleCheckBox = Element.xpath("//input[@id= 'chkShowTitle']")
         self.chartTypeSelection = Element.xpath("//select[@id= 'cbbChartType']")
-        self.styleRadioButtons = Element.xpath("//td[contains(text(), 'Style')]/following-sibling::td/input[@value='{}']")
+        self.styleRadioButtons = Element.xpath(
+            "//td[contains(text(), 'Style')]/following-sibling::td/input[@value='{}']")
         self.categorySelection = Element.xpath("//select[@id= 'cbbCategoryField']")
         self.categoryCaptionTextBox = Element.xpath("//input[@id= 'txtCategoryXAxis']")
         self.seriesSelection = Element.xpath("//select[@id= 'cbbSeriesField']")
         self.seriesCaptionTextBox = Element.xpath("//input[@id= 'txtValueYAxis']")
-        self.legendsRadioButton = Element.xpath("//input[@name= 'radPlacement' and @value= '{}']")
         self.dataLabelCheckBox = Element.xpath("//label[contains(text(),'{}')]/input[@type='checkbox']")
-        self.addNewPanelOkButton = Element.xpath("//div[@class ='ui-dialog-container']//input[contains(@onclick, 'Dashboard.addPanel(')]")
         self.panelSettingForm = Element.xpath("//fieldset[@id='fdSettings']")
         self.panelSettingFormTitle = Element.xpath("//fieldset[@id='fdSettings']/legend")
+        self.addNewPanelOkButton = Element.xpath(
+            "//div[@class ='ui-dialog-container']//input[contains(@onclick, 'Dashboard.addPanel(')]")
+        self.editPanelOkButton = Element.xpath(
+            "//div[@class ='ui-dialog-container']//input[contains(@onclick, 'Dashboard.updatePanel(')]")
+        self.addNewPanelCancelButton = Element.xpath(
+            "//div[@class ='ui-dialog-container']//input[contains(@onclick, 'Dashboard.closePanelDialog();')]")
 
         # Panel Configuration Modal
         self.panelConfigurationOkButton = Element.xpath("//div[@id='div_panelConfigurationDlg']//input[@id='OK']")
         self.heightTextBox = Element.xpath("//input[@id='txtHeight']")
-        self.selectFolderButtonOnPanelConfigurationModal = Element.xpath("//a[contains(@href, 'javascript:Dashboard.treeFolder();')]")
+        self.selectFolderButtonOnPanelConfigurationModal = Element.xpath(
+            "//a[contains(@href, 'javascript:Dashboard.treeFolder();')]")
 
         self.panelTypeRadioButtonsXpath = "//td[text()='Type']/following-sibling::td/label[contains(text(), '{}')]"
-
+        self.dataLabelCheckBoxXpath = "//label[contains(text(),'{}')]/input[@type='checkbox']"
+        self.legendsRadioButtonXpath = "//input[@name= 'radPlacement' and @value= '{}']"
 
     def select_panel_type(self, panel_type: PanelType):
-            if panel_type is not None:
-                panelTypeRadioButtons = Element.xpath(self.panelTypeRadioButtonsXpath)
-                panelTypeRadioButtons.value = panelTypeRadioButtons.value.replace('{}', panel_type.get_value(), 1)
-                panelTypeRadioButtons.click()
+        if panel_type is not None:
+            panelTypeRadioButtons = Element.xpath(self.panelTypeRadioButtonsXpath)
+            panelTypeRadioButtons.value = panelTypeRadioButtons.value.replace('{}', panel_type.get_value(), 1)
+            panelTypeRadioButtons.click()
 
     def select_data_profile(self, data_profile: str):
         if data_profile is not None:
@@ -56,13 +65,22 @@ class CreateNewPanelDialog(BasePage):
 
     def select_series(self, series: SeriesOptions):
         if series is not None:
-            self.seriesSelection.select_by_text(series.get_value())
+            self.seriesSelection.select_by_value(series.value)
+
+    def select_chart_type_selection(self, chart_type: ChartTypeOptions):
+        if chart_type is not None:
+            self.chartTypeSelection.select_by_value(chart_type.value)
+            time.sleep(1)
 
     def click_on_OK_button_of_new_panel_dialog(self):
         self.addNewPanelOkButton.click()
 
     def click_on_OK_button_of_confiuration(self):
-        self.panelConfigurationOkButton.click()
+        if self.panelConfigurationOkButton.is_displayed():
+            self.panelConfigurationOkButton.click()
+
+    def click_on_cancel_button(self):
+        self.addNewPanelCancelButton.click()
 
     def fill_display_settings(self, display_setting: DisplaySettings):
         # self.select_panel_type(display_setting.panelType)
@@ -73,8 +91,8 @@ class CreateNewPanelDialog(BasePage):
         self.select_series(chart_setting.series)
 
     def fill_new_panel_info(self, new_panel: Panel):
-        time.sleep(2)
         self.fill_display_settings(new_panel.displaySettings)
+        time.sleep(2)
         self.fill_chart_settings(new_panel.displaySettings)
 
     def create_new_panel(self, new_panel: Panel):
@@ -102,3 +120,9 @@ class CreateNewPanelDialog(BasePage):
         self.dataProfileSelection.click()
         return self.dataProfileSelection.has_option_with_text(data_profile.dataProfileName)
 
+    @allure.step("Check if Data Value is disabled")
+    def is_data_label_is_disabled(self, data_label: DataLabelsCheckBoxes):
+        dataLabelCheckBox = Element.xpath(self.dataLabelCheckBoxXpath)
+        dataLabelCheckBox.value = dataLabelCheckBox.value.replace('{}', data_label.value)
+        time.sleep(1)
+        return dataLabelCheckBox.is_disabled()

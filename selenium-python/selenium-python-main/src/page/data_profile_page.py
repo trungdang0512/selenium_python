@@ -41,7 +41,7 @@ class DataProfilePage(BasePage):
         self.select_related_data(data_profile.relatedData)
 
     def create_new_data_profile(self, data_profile: DataProfile):
-        time.sleep(2)
         self.fill_new_data_profile_info(data_profile)
         self.click_on_finish_button()
+        time.sleep(2)
 

@@ -13,7 +13,7 @@ from src.automation import Selenium
 
 
 def _waiter():
-    return WebDriverWait(Selenium.driver.get_webdriver(), 10)
+    return WebDriverWait(Selenium.driver.get_webdriver(), 20)
 
 
 def _driver():
@@ -60,7 +60,7 @@ class Element:
         self.find_visible().clear()
 
     def click(self):
-        self.find_visible().click()
+        self.find().click()
 
     def hover(self):
         hover = ActionChains(_driver()).move_to_element(self.find_visible())
@@ -124,3 +124,14 @@ class Element:
             if text in option.text:
                 return True
         return False
+
+    def scroll_to(self):
+        element = self.find()
+        _driver().execute_script("arguments[0].scrollIntoView(true);", element)
+
+    def is_disabled(self) -> bool:
+        try:
+            element = self.find_visible()
+            return not element.is_enabled() or element.get_attribute("disabled") is not None or element.get_attribute("aria-disabled") == "true"
+        except (NoSuchElementException, TimeoutException):
+            return True

@@ -17,10 +17,8 @@ class DashboardPage(BasePage):
         super().__init__()
         self.header = Element.xpath("//title")
         self.loggedUser = Element.xpath("//a[@href='#Welcome']")
-        self.globalSettingMenu = Element.xpath("//div[@id='main-menu']//li[@class='mn-setting']")
         self.choosePanelsButton = Element.xpath("//a[@id='btnChoosepanel']")
 
-        self.itemsOnGlobalSettingMenuXpath = "//div[@id='main-menu']//li[@class='mn-setting']//following-sibling::li/a[text()='{}']"
         self.pageOnMenuBarXpath = "//div[@id='main-menu']//li[a[text()='{}']]"
         self.pageBesidePageOnMenuBarXpath = "//div[@id='main-menu']//li[a[text()='{}']]/following-sibling::li[1]/a[text()='{}']"
 
@@ -29,13 +27,6 @@ class DashboardPage(BasePage):
         PageLoader.wait_element_displayed(self.loggedUser)
         return self.loggedUser.is_displayed()
 
-    @allure.step("Select Global Setting Menu")
-    def select_global_setting_menu(self, option):
-        time.sleep(5)
-        itemsOnGlobalSettingMenu = Element.xpath(self.itemsOnGlobalSettingMenuXpath)
-        self.globalSettingMenu.click()
-        itemsOnGlobalSettingMenu.value = itemsOnGlobalSettingMenu.value.replace('{}', option, 1)
-        itemsOnGlobalSettingMenu.click()
 
     def check_page_after(self, page1: Page, page2: Page):
         time.sleep(5)

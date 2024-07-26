@@ -10,7 +10,7 @@ class ChoosePanelsPage(BasePage):
     def __init__(self):
         super().__init__()
         self.panelTableItemsXpath = "//div[contains(text(),'{}')]/following-sibling::table//a"
-
+        self.createNewPanelButton = Element.xpath("//span[contains(@onclick, 'Dashboard.openAddPanel(')]")
 
     def get_panel_table_items(self, panel_name: PanelType) -> List[str]:
         panelTableItems = Element.xpath(self.panelTableItemsXpath)
@@ -18,3 +18,7 @@ class ChoosePanelsPage(BasePage):
         time.sleep(2)
         return panelTableItems.get_all_texts()
 
+    def click_on_create_new_panel_button(self):
+        self.createNewPanelButton.scroll_to()
+        time.sleep(1)
+        self.createNewPanelButton.click()

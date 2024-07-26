@@ -1,11 +1,8 @@
 import allure
 from ddt import ddt, data, unpack
 
-from src.constants.constants import Constants
-from src.enum.panel_enum.panel_type import PanelType
 from src.enum.panel_enum.series_options import SeriesOptions
 from src.model.data_profile import DataProfile
-from src.model.page import Page
 from src.model.panel.chart_settings import ChartSettings
 from src.model.panel.panel import Panel
 from src.page.choose_panels_page import ChoosePanelsPage
@@ -15,8 +12,6 @@ from src.page.dashboard_page import DashboardPage
 from src.page.data_profile_page import DataProfilePage
 from src.page.login_page import LoginPage
 from src.page.panels_page import PanelsPage
-from src.until.json_data_loader import JSONData_Loader
-from src.until.list_until import ListUtils
 from src.until.string_helper import StringHelper
 from tests.test_base import TestBase
 from src.until.soft_assert import SoftAssert
@@ -33,12 +28,19 @@ class test_DA_PANEL_TC034(TestBase):
     data_profile_page = DataProfilePage()
 
     new_data_profile = DataProfile(dataProfileName='Data_Profile_' + StringHelper.generate_name())
+    new_chart_setting = ChartSettings(
+        display_name='Panel_' + StringHelper.generate_name(),
+        series=SeriesOptions.select_random_series()
+    )
+    new_panel = Panel(
+        new_chart_setting
+    )
 
     @allure.title(
         "Verify that the newly added main parent page is positioned at the location specified as set with 'Displayed After' field of 'New Page' form on the main page bar 'Parent Page' dropped down menu")
-    @data(("administrator", "", new_data_profile))
+    @data(("administrator", "", new_data_profile, new_panel))
     @unpack
-    def test_DA_PANEL_TC034(self, user_name, password, new_data_profile):
+    def test_DA_PANEL_TC034(self, user_name, password, new_data_profile, new_panel):
         self.login_page.login(user_name, password)
         self.dashboard_page.open_data_profile_page()
         self.data_profile_page.click_on_add_new_link()
@@ -46,6 +48,15 @@ class test_DA_PANEL_TC034(TestBase):
 
         self.data_profile_page.open_panels_page()
         self.panel_page.open_add_new_panel_dialog()
-        result = self.new_panel_dialog.is_data_profile_populated_under_the_drop_down_menu(self.new_data_profile)
-        print(result)
+        SoftAssert.soft_assert(self.assertTrue(
+            self.new_panel_dialog.is_data_profile_populated_under_the_drop_down_menu(self.new_data_profile),
+            "Data profiles are not populated correctly"))
 
+        self.new_panel_dialog.create_new_panel(new_panel)
+        self.panel_page.open_edit_panel_dialog(new_panel)
+        SoftAssert.soft_assert(self.assertTrue(
+            self.new_panel_dialog.is_data_profile_populated_under_the_drop_down_menu(self.new_data_profile),
+            "Data profiles are not populated correctly"))
+        self.new_panel_dialog.click_on_cancel_button()
+
+        SoftAssert.assert_all()
