@@ -1,0 +1,9 @@
+No notification found to close.
+Found element: <selenium.webdriver.remote.webelement.WebElement (session="923364e71dac85f0d0474b49b5010e84", element="f.4C81976A5E37BC594DDCB1A04C338CAD.d.F3FDA07B37F515C1EA66291CB8ECDBB5.e.122")>
+Element text: Chart Settings
+281
+278
+Found element: <selenium.webdriver.remote.webelement.WebElement (session="923364e71dac85f0d0474b49b5010e84", element="f.4C81976A5E37BC594DDCB1A04C338CAD.d.F3FDA07B37F515C1EA66291CB8ECDBB5.e.141")>
+Element text: Indicator Settings
+Found element: <selenium.webdriver.remote.webelement.WebElement (session="923364e71dac85f0d0474b49b5010e84", element="f.4C81976A5E37BC594DDCB1A04C338CAD.d.F3FDA07B37F515C1EA66291CB8ECDBB5.e.161")>
+Element text: Heat Map Settings
