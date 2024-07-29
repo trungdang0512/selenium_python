@@ -1,5 +1,4 @@
 import unittest
-
 import pytest
 
 from src.automation import Selenium

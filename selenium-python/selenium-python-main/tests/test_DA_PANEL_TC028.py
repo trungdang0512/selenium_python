@@ -26,4 +26,4 @@ class test_DA_PANEL_TC028(TestBase):
         self.login_page.login(user_name, password)
         self.dashboard_page.open_panels_page()
         self.panel_page.open_add_new_panel_dialog()
-        self.assertTrue(self.panel_page.is_user_menu_disabled())
+        self.assertTrue(self.panel_page.is_menu_locked())

@@ -54,7 +54,7 @@ class DashboardPage(BasePage):
         self.click_on_page(page)
 
     def open_choose_panels_page(self):
-        time.sleep(1)
+        time.sleep(2)
         self.choosePanelsButton.click()
 
     def get_page_tilte(self):

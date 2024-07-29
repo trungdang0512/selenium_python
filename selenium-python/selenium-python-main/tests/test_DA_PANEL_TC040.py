@@ -112,4 +112,3 @@ class test_DA_PANEL_TC040(TestBase):
                             "VP05.4: Percentage checkbox is not disabled"))
 
         SoftAssert.assert_all()
-        self.new_panel_dialog.log_out()

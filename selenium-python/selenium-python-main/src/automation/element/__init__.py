@@ -1,6 +1,6 @@
 from typing import List
 
-from selenium.common import NoSuchElementException, TimeoutException
+from selenium.common import NoSuchElementException, TimeoutException, ElementClickInterceptedException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -8,6 +8,7 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as condition
 from selenium.webdriver.support import expected_conditions as EC
+
 
 from src.automation import Selenium
 
@@ -60,7 +61,7 @@ class Element:
         self.find_visible().clear()
 
     def click(self):
-        self.find().click()
+        self.find_visible().click()
 
     def hover(self):
         hover = ActionChains(_driver()).move_to_element(self.find_visible())
@@ -135,3 +136,16 @@ class Element:
             return not element.is_enabled() or element.get_attribute("disabled") is not None or element.get_attribute("aria-disabled") == "true"
         except (NoSuchElementException, TimeoutException):
             return True
+
+    def no_effect_on_click(self) -> bool:
+        try:
+            element = self.find()
+            before_click = element.get_attribute("outerHTML")
+            element.click()
+            after_click = element.get_attribute("outerHTML")
+            return before_click == after_click
+        except ElementClickInterceptedException:
+            return True
+        except (NoSuchElementException, TimeoutException):
+            return False
+

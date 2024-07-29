@@ -16,20 +16,20 @@ class JSONData_Loader:
             # Xây dựng đường dẫn tuyệt đối từ đường dẫn tương đối
             project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
             file_path = os.path.join(project_root, relative_path)
-            print(f"Opening file: {file_path}")
+            # print(f"Opening file: {file_path}")
 
             with open(file_path, 'r') as file:
                 data = json.load(file)
-                print(f"Data loaded from file: {data}")
+                # print(f"Data loaded from file: {data}")
                 if key in data:
-                    print(f"Key '{key}' found in JSON file.")
+                    # print(f"Key '{key}' found in JSON file.")
                     return data[key]  # Định dạng đẹp với 4 khoảng trắng
                 else:
-                    print(f"Key '{key}' not found in JSON file.")
+                    # print(f"Key '{key}' not found in JSON file.")
                     return []
         except FileNotFoundError:
-            print(f"File '{file_path}' not found.")
+            # print(f"File '{file_path}' not found.")
             return []
         except json.JSONDecodeError:
-            print(f"Error decoding JSON from file '{file_path}'.")
+            # print(f"Error decoding JSON from file '{file_path}'.")
             return []

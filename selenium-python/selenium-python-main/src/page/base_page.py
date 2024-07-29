@@ -24,8 +24,10 @@ class BasePage:
 
     @allure.step("Log Out")
     def log_out(self):
-        time.sleep(1)
-        self.logoutBtn.scroll_to()
+        time.sleep(2)
+        self.usersMenu.scroll_to()
+        self.usersMenu.hover()
+        self.logoutBtn.hover()
         self.logoutBtn.click()
 
     @allure.step("Select Global Setting Menu")
@@ -50,9 +52,9 @@ class BasePage:
         self.dataProfileLink.click()
         time.sleep(1)
 
-    @allure.step("Check if User Menu Disabled")
-    def is_user_menu_disabled(self):
-        return self.usersMenu.is_disabled()
+    @allure.step("Check if Disabled")
+    def is_menu_locked(self):
+        return self.globalSettingMenu.no_effect_on_click()
 
     @allure.step("Get Text On Alert Box")
     def get_alert_text(self):

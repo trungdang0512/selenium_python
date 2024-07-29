@@ -100,6 +100,7 @@ class CreateNewPanelDialog(BasePage):
         time.sleep(2)
         self.click_on_OK_button_of_new_panel_dialog()
         self.click_on_OK_button_of_confiuration()
+        time.sleep(2)
 
     def get_panel_setting_form_title(self):
         time.sleep(1)
